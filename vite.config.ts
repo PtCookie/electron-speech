@@ -41,11 +41,13 @@ const nodeApiDotnet = (): PluginOption => {
     transform(code, id) {
       if (id.endsWith("node_modules/node-api-dotnet/init.js")) {
         // Refactor commonjs to ESM
+        const bundleRoot = join(import.meta.dirname, "modules/SystemSpeech", "node_modules/node-api-dotnet");
+
         code =
           `import { join } from "node:path";\n` +
           `import { createRequire } from "node:module";\n` +
           `const require = createRequire(import.meta.url);\n` +
-          `const bundleRoot = "${join(import.meta.dirname, "modules/SystemSpeech", "node_modules/node-api-dotnet")}";\n` +
+          `const bundleRoot = ${JSON.stringify(bundleRoot)};\n` +
           code;
         code = code.replace("module.exports = initialize", "export default initialize");
 
