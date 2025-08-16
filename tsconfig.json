@@ -1,0 +1,24 @@
+{
+    "include": ["**/*"],
+    "compilerOptions": {
+        "strict": true,
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "allowJs": true,
+        "baseUrl": ".",
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "jsxImportSource": "react",
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    }
+}

@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json
+appId: com.electron.${name}
+asar: true
+productName: electron-app
+directories:
+  output: build/${version}
+files:
+  - dist
+  - dist-electron
+mac:
+  target:
+    - target: dmg
+      arch:
+        - arm64
+  artifactName: ${productName}-Mac-${version}-Installer.${ext}
+win:
+  target:
+    - target: portable
+      arch:
+        - x64
+  artifactName: ${productName}-Windows-${version}-Setup.${ext}
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: true
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+  artifactName: ${productName}-Linux-${version}.${ext}
