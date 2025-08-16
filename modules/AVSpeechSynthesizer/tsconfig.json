@@ -1,11 +1,11 @@
 {
-    "include": ["**/*"],
+    "include": ["./src/*"],
+    "exclude": ["node_modules/"],
     "compilerOptions": {
         "strict": true,
         "target": "ESNext",
         "module": "ESNext",
         "moduleResolution": "Bundler",
-        "allowImportingTsExtensions": true,
         "resolveJsonModule": true,
         "verbatimModuleSyntax": true,
         "isolatedModules": true,
@@ -14,12 +14,11 @@
         "skipLibCheck": true,
         "allowJs": true,
         "baseUrl": ".",
-        "noEmit": true,
-        "jsx": "react-jsx",
-        "jsxImportSource": "react",
+        "outDir": "./",
+        "declaration": true,
+        "listEmittedFiles": true,
         "paths": {
-            "@/*": ["./src/*"],
-            "@modules/*": ["./modules/*"]
+            "@/*": ["./src/*"]
         }
     }
 }

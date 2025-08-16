@@ -1,9 +1,39 @@
 import { join } from "node:path";
-import { defineConfig } from "vite";
+import { copyFileSync, readdirSync, statSync } from "node:fs";
+import { defineConfig, type PluginOption } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import electron from "vite-plugin-electron/simple";
+
+const copyAddons = (): PluginOption => {
+  return {
+    name: "copy-addons",
+    generateBundle() {
+      const modulesDir = "./modules";
+      const targetDir = "./dist-electron";
+
+      const moduleNames = readdirSync(modulesDir).filter((name) => {
+        const modulePath = join(modulesDir, name);
+
+        return statSync(modulePath).isDirectory();
+      });
+
+      if (moduleNames.length === 0) return;
+
+      for (const moduleName of moduleNames) {
+        const sourceDir = join(modulesDir, moduleName);
+        const items = readdirSync(sourceDir);
+
+        for (const item of items) {
+          if (item.endsWith(".node")) {
+            copyFileSync(`${sourceDir}/${item}`, `${targetDir}/${item}`);
+          }
+        }
+      }
+    },
+  };
+};
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -16,7 +46,13 @@ export default defineConfig({
         // Shortcut of `build.lib.entry`.
         entry: "src/index.ts",
         vite: {
-          plugins: [tsconfigPaths()],
+          plugins: [tsconfigPaths(), copyAddons()],
+          build: {
+            target: "node22",
+            rollupOptions: {
+              external: ["./modules/AVSpeechSynthesizer"],
+            },
+          },
         },
       },
       preload: {

@@ -1,0 +1,28 @@
+{
+    "name": "node-speech-avfoundation",
+    "version": "0.1.0",
+    "description": "Node.js module for speech synthesis using AVFoundation on macOS.",
+    "keywords": [
+        "speech-synthesis",
+        "avfoundation",
+        "nodejs"
+    ],
+    "license": "MIT",
+    "author": {
+        "name": "Minsup Ju",
+        "email": "me@ptcookie.net",
+        "url": "https://devlog.ptcookie.net/"
+    },
+    "type": "module",
+    "main": "index.js",
+    "packageManager": "pnpm@10.12.4",
+    "scripts": {
+        "postinstall": "pnpm run build",
+        "node-gyp": "node-gyp",
+        "build": "tsc && cp ./build/Release/AVSpeechSynthesizer.node ./"
+    },
+    "devDependencies": {
+        "node-addon-api": "^8.5.0",
+        "node-gyp": "^11.3.0"
+    }
+}

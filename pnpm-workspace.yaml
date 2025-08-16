@@ -1,3 +1,5 @@
+packages:
+  - "modules/*"
 onlyBuiltDependencies:
   - "@tailwindcss/oxide"
   - electron
