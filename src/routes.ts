@@ -3,6 +3,7 @@ import { type RouteObject } from "react-router";
 import BaseLayout from "@/layouts/BaseLayout.tsx";
 import Home from "@/routes/index.tsx";
 import About from "@/routes/about.tsx";
+import Synthesizer from "@/routes/synthesizer.tsx";
 import { getSystemInfo } from "@/ipc/renderer.ts";
 
 export const routes: RouteObject[] = [
@@ -11,6 +12,7 @@ export const routes: RouteObject[] = [
     children: [
       { index: true, Component: Home },
       { path: "/about", loader: async () => getSystemInfo(), Component: About },
+      { path: "/synthesizer", Component: Synthesizer },
     ],
   },
 ];

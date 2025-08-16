@@ -20,6 +20,11 @@ export default function BaseLayout() {
                 About
               </Link>
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link className={buttonVariants({ variant: "link" })} to="/synthesizer">
+                Synthesizer
+              </Link>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
       </div>
