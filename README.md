@@ -1,6 +1,6 @@
-# Electron Vite template
+# Electron Speech Application
 
-Opinionated Electron + Vite template.
+Electron application uses system speech synthesis to read text.
 
 ## License
 

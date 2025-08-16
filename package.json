@@ -1,13 +1,11 @@
 {
-    "name": "electron-vite",
-    "productName": "electron-app",
-    "version": "0.6.0",
-    "description": "Vite template for Electron application",
+    "name": "electron-speech",
+    "productName": "speech-app",
+    "version": "0.1.0",
+    "description": "Electron application uses system speech synthesis to read text.",
     "keywords": [
-        "Electron",
-        "Vite",
-        "React",
-        "TailwindCSS"
+        "speech-synthesis",
+        "Electron"
     ],
     "license": "MIT",
     "author": {
