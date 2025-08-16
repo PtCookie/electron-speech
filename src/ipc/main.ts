@@ -2,6 +2,7 @@ import { ipcMain } from "electron";
 import { platform, arch } from "node:os";
 
 import { logger } from "@/lib/logger.ts";
+import { SystemSpeech } from "@modules/SystemSpeech";
 import { AVSpeechSynthesizer } from "@modules/AVSpeechSynthesizer";
 
 export default () => {
@@ -17,6 +18,33 @@ export default () => {
 
     try {
       if (currentPlatform === "win32") {
+        switch (cmd) {
+          case "speak": {
+            if (!text) break;
+
+            const speaking = SystemSpeech.state() === "Speaking";
+
+            if (speaking) {
+              SystemSpeech.stop();
+            }
+
+            SystemSpeech.speak(text);
+            break;
+          }
+          case "stop": {
+            SystemSpeech.stop();
+            break;
+          }
+          case "pause": {
+            SystemSpeech.pause();
+            break;
+          }
+          case "resume": {
+            SystemSpeech.resume();
+            break;
+          }
+        }
+
         return true;
       } else if (currentPlatform === "darwin") {
         switch (cmd) {
@@ -64,7 +92,7 @@ export default () => {
 
     try {
       if (currentPlatform === "win32") {
-        return "Ready";
+        return SystemSpeech.state();
       } else if (currentPlatform === "darwin") {
         if (AVSpeechSynthesizer.isSpeaking()) {
           return "Speaking";

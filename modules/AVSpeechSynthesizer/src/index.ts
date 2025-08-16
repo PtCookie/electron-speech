@@ -138,14 +138,4 @@ class AVSpeechSynthesizer {
   }
 }
 
-const speak = (text: string, options: SpeechOptions = {}) => AVSpeechSynthesizer.speak(text, options);
-const pause = () => AVSpeechSynthesizer.pause();
-const resume = () => AVSpeechSynthesizer.resume();
-const stop = () => AVSpeechSynthesizer.stop();
-const isSpeaking = () => AVSpeechSynthesizer.isSpeaking();
-const isPaused = () => AVSpeechSynthesizer.isPaused();
-const getVoices = () => AVSpeechSynthesizer.getVoices();
-const getStatus = () => AVSpeechSynthesizer.getStatus();
-const printDebugInfo = () => AVSpeechSynthesizer.printDebugInfo();
-
-export { AVSpeechSynthesizer, speak, pause, resume, stop, isSpeaking, isPaused, getVoices, getStatus, printDebugInfo };
+export { AVSpeechSynthesizer };

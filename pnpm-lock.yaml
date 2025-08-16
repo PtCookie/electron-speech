@@ -150,6 +150,18 @@ importers:
       node-gyp:
         specifier: ^11.3.0
         version: 11.3.0
+      typescript:
+        specifier: ~5.8.0
+        version: 5.8.3
+
+  modules/SystemSpeech:
+    dependencies:
+      node-api-dotnet:
+        specifier: ^0.9.15
+        version: 0.9.15
+      typescript:
+        specifier: ~5.8.0
+        version: 5.8.3
 
 packages:
 
@@ -2761,6 +2773,9 @@ packages:
   node-addon-api@8.5.0:
     resolution: {integrity: sha512-/bRZty2mXUIFY/xU5HLvveNHlswNJej+RnxBjOMkidWfwZzgTbPG1E3K5TOxRLOR+5hX7bSofy8yf1hZevMS8A==}
     engines: {node: ^18 || ^20 || >= 21}
+
+  node-api-dotnet@0.9.15:
+    resolution: {integrity: sha512-xJjNRzxjovXpyDeIfg3ER1q7gGJNwRDV0Tvdb2scQBHqpHGrf5s2s9zexNn9wbVboxXpc0YOcOOzcfWjoUgG4A==}
 
   node-api-version@0.2.1:
     resolution: {integrity: sha512-2xP/IGGMmmSQpI1+O/k72jF/ykvZ89JeuKX3TLJAYPDVLUalrshrLHkeVcCCZqG/eEa635cr8IBYzgnDvM2O8Q==}
@@ -6431,6 +6446,8 @@ snapshots:
     optional: true
 
   node-addon-api@8.5.0: {}
+
+  node-api-dotnet@0.9.15: {}
 
   node-api-version@0.2.1:
     dependencies:

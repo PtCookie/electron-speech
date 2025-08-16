@@ -1,4 +1,4 @@
-import { join } from "node:path";
+import { join, normalize } from "node:path";
 import { copyFileSync, readdirSync, statSync } from "node:fs";
 import { defineConfig, type PluginOption } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -35,6 +35,59 @@ const copyAddons = (): PluginOption => {
   };
 };
 
+const nodeApiDotnet = (): PluginOption => {
+  return {
+    name: "node-api-dotnet",
+    transform(code, id) {
+      if (id.endsWith("node_modules/node-api-dotnet/init.js")) {
+        // Refactor commonjs to ESM
+        code =
+          `import { join } from "node:path";\n` +
+          `import { createRequire } from "node:module";\n` +
+          `const require = createRequire(import.meta.url);\n` +
+          `const bundleRoot = "${join(import.meta.dirname, "modules/SystemSpeech", "node_modules/node-api-dotnet")}";\n` +
+          code;
+        code = code.replace("module.exports = initialize", "export default initialize");
+
+        // Replace a relative path of assemblyName with an absolute path
+        const assemblyName = "Microsoft.JavaScript.NodeApi";
+        code = code.replace(
+          /require\(`\.\/(.+?)\/\$\{assemblyName\}\.node`\)/g,
+          "require(join(bundleRoot, `./$1/" + assemblyName + ".node`))",
+        );
+
+        // Resolve relative path of nativeHost and managedHostPath
+        code = code.replace(
+          "nativeHost = require(__dirname + `/${rid}/${assemblyName}.node`)",
+          "nativeHost = require(join(bundleRoot, `./${rid}/${assemblyName}.node`))",
+        );
+        code = code.replace(
+          "const managedHostPath = __dirname + `/${targetFramework}/${assemblyName}.DotNetHost.dll`",
+          "const managedHostPath = join(bundleRoot, `./${targetFramework}/${assemblyName}.DotNetHost.dll`)",
+        );
+
+        return code;
+      }
+
+      const normalizeId = normalize(id);
+      const assemblyRoot = normalize(join(import.meta.dirname, "modules/SystemSpeech/bin"));
+
+      if (normalizeId.startsWith(assemblyRoot)) {
+        // Replace import.meta.url with a constant value
+        code = code.replace("import { fileURLToPath } from 'node:url';", "");
+        code = code.replace(
+          "const __filename = fileURLToPath(import.meta.url)",
+          `const __filename = ${JSON.stringify(normalizeId)}`,
+        );
+
+        return code;
+      }
+
+      return code;
+    },
+  };
+};
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -46,11 +99,11 @@ export default defineConfig({
         // Shortcut of `build.lib.entry`.
         entry: "src/index.ts",
         vite: {
-          plugins: [tsconfigPaths(), copyAddons()],
+          plugins: [tsconfigPaths(), copyAddons(), nodeApiDotnet()],
           build: {
             target: "node22",
             rollupOptions: {
-              external: ["./modules/AVSpeechSynthesizer"],
+              external: ["./modules/*"],
             },
           },
         },

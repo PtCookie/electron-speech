@@ -1,10 +1,10 @@
 {
-    "name": "node-speech-avfoundation",
+    "name": "node-speech-systemspeech",
     "version": "0.1.0",
-    "description": "Node.js module for speech synthesis using AVFoundation on macOS.",
+    "description": "Node.js module for speech synthesis using System.Speech on Windows.",
     "keywords": [
         "speech-synthesis",
-        "avfoundation",
+        "dotnet",
         "nodejs"
     ],
     "license": "MIT",
@@ -18,12 +18,12 @@
     "packageManager": "pnpm@10.12.4",
     "scripts": {
         "postinstall": "pnpm run build",
-        "node-gyp": "node-gyp",
-        "build": "tsc && cp ./build/Release/AVSpeechSynthesizer.node ./"
+        "build": "dotnet build"
     },
-    "devDependencies": {
-        "node-addon-api": "^8.5.0",
-        "node-gyp": "^11.3.0",
+    "dependencies": {
+        "node-api-dotnet": "^0.9.15"
+    },
+    "peerDependencies": {
         "typescript": "~5.8.0"
     }
 }
