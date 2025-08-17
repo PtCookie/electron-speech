@@ -1,5 +1,5 @@
 import { join, normalize } from "node:path";
-import { copyFileSync, readdirSync, statSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
 import { defineConfig, type PluginOption } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
@@ -20,6 +20,10 @@ const copyAddons = (): PluginOption => {
       });
 
       if (moduleNames.length === 0) return;
+
+      if (!existsSync(targetDir)) {
+        mkdirSync(targetDir, { recursive: true });
+      }
 
       for (const moduleName of moduleNames) {
         const sourceDir = join(modulesDir, moduleName);
